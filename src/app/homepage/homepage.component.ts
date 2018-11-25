@@ -1,12 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpResponse, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { CallAPIService } from '../service/call-api.service';
-// import 'rxjs/add/observable/forkJoin';
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/concatMap';
-// import 'rxjs/add/operator/toPromise';
-// import 'rxjs/Rx';
+import { Component, OnInit, Directive, HostListener, ElementRef } from '@angular/core';
+import { APIService } from '../service/api.service';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -15,19 +10,37 @@ import { CallAPIService } from '../service/call-api.service';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
+  panelOpenState = false;
 
-  public temp = [];
+  constructor(private api: APIService, private el: ElementRef, private router: Router) { }
 
-  constructor(private api: CallAPIService) { }
+  objKeys: any[];
+  lists: any[];
+
+  my_indus = [
+    {
+    concept: 'trade'
+  },
+  {
+    concept: 'acq'
+  }
+];
 
   ngOnInit() {
-    // const params = new HttpParams().set('keywords', 'bangkokpost')
-    // .set('fromDate', '2018-02-22').set('toDate', '2018-02-23');
-
-    // this.http.get<Data[]>(this.getFrequency, {params})
-    // console.log(this.getResult);
-    console.log('Init');
-    this.api.getAssociationRank().subscribe( data => console.log(data));
+    this.get_myindus('trade', '2018-11-24');
+    this.get_myindus('acq', '2018-11-24');
+  }
+  get_myindus(concept, date) {
+    this.api.get_conceptByNameDate(concept, date).subscribe(
+      (res: any) => {
+        this.lists = res;
+        this.objKeys = Object.keys(this.lists).map(index => {
+          const data = this.lists[index];
+          console.log(data.url);
+          return data;
+        });
+      }
+    );
   }
 
 }

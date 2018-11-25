@@ -1,3 +1,35 @@
-<p>
-  homepage works!
-</p>
+<h1>Stock-Industries Classification</h1>
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Search" >
+  </mat-form-field>
+  <button class="sub_button" mat-raised-button color="primary">Search</button>
+</form>
+
+<h2>My industries</h2>
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let a of my_indus">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{a.concept}} Industries
+      </mat-panel-title>
+      <mat-panel-description>
+        News' sources provided here
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <table>
+      <tr>
+        <th>Published-Time</th>
+        <th>Link</th>
+      </tr>
+      <tr *ngFor="let link of lists | keyvalue ">
+        <th>{{link.value.published-time}}</th>
+        <th><a href='{{link.value.url}}'appExternalUrl>{{link.value.url}}</a></th>
+        
+      </tr>
+    </table>
+    
+  </mat-expansion-panel>
+  
+</mat-accordion>
