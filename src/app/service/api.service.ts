@@ -11,11 +11,6 @@ export class APIService {
 
   constructor(private http: HttpClient) { }
 
-  // private extractData(res: Response) {
-  //   const body = <any[]>res.json().alum;
-  //   return body || [];       // here you are return an object
-  // }
-
   get_conceptByDate(): Observable<any[]> {
     // const getConceptByDateUrl = 'https://api-dot-nic-core-2018.appspot.com/concepts/' + date;
     return this.http.get<any[]>('https://api-dot-nic-core-2018.appspot.com/concepts/').pipe(map(res => res));
@@ -23,6 +18,11 @@ export class APIService {
   get_conceptByNameDate(name, date): Observable<any[]> {
     const getConceptByNameDateUrl = 'https://api-dot-nic-core-2018.appspot.com/concept/' + name + '/' + date;
     return this.http.get<any[]>(getConceptByNameDateUrl).pipe(map(res => res));
+  }
+  get_bydate(date): Observable<any[]> {
+    const getByDateUrl = 'https://api-dot-nic-core-2018.appspot.com/bydate/' + date;
+    // const params = new HttpParams().set(date);
+    return this.http.get<any[]>(getByDateUrl).pipe(map(res => res));
   }
 
   // getFrequencyBySource() {
@@ -64,11 +64,6 @@ export class APIService {
   // get_today() {
   //   const getTodayUrl = 'https://api-dot-nic-core-2018.appspot.com/gettoday/';
   //   return this.http.get(getTodayUrl);
-  // }
-  // get_bydate(date) {
-  //   const getByDateUrl = 'https://api-dot-nic-core-2018.appspot.com/bydate/' + date;
-  //   // const params = new HttpParams().set(date);
-  //   return this.http.get(getByDateUrl);
   // }
   // get_predict(data) {
   //   const getPredictUrl = 'https://api-dot-nic-core-2018.appspot.com/predict/';

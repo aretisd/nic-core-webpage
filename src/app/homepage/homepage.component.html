@@ -1,35 +1,91 @@
 <h1>Stock-Industries Classification</h1>
-<form class="example-form">
+
+<div >
+<form [formGroup]="searchForm" class="example-form">
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Search" >
+    <input matInput formControlName="searchCtrl" placeholder="Search" >
   </mat-form-field>
-  <button class="sub_button" mat-raised-button color="primary">Search</button>
+  <button class="sub_button" (click)="get_search()" mat-raised-button color="primary">Search</button>
 </form>
+</div>
 
-<h2>My industries</h2>
-
-<mat-accordion>
-  <mat-expansion-panel *ngFor="let a of my_indus">
+<mat-accordion *ngIf="isSearch" >
+  <mat-expansion-panel class="search">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{a.concept}} Industries
+        Search
       </mat-panel-title>
-      <mat-panel-description>
-        News' sources provided here
-      </mat-panel-description>
     </mat-expansion-panel-header>
     <table>
       <tr>
         <th>Published-Time</th>
         <th>Link</th>
       </tr>
-      <tr *ngFor="let link of lists | keyvalue ">
+      <tr *ngFor="let link of searchList | keyvalue ">
         <th>{{link.value.published-time}}</th>
-        <th><a href='{{link.value.url}}'appExternalUrl>{{link.value.url}}</a></th>
-        
+        <th><a href="{{link.value.url}}" target="_blank">{{link.value.url}}</a></th>
       </tr>
     </table>
-    
   </mat-expansion-panel>
-  
 </mat-accordion>
+
+<table>
+  <tr>
+    <th>My industries</th>
+    <th>Most Covered Industries</th>
+  </tr>
+  <tr>
+    <th>
+      <!-- My industries expansion -->
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let a of my_indus">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{a.concept}} Industries
+            </mat-panel-title>
+            <mat-panel-description>
+              News' sources provided here
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <table>
+            <tr>
+              <th>Published-Time</th>
+              <th>Link</th>
+            </tr>
+            <tr *ngFor="let link of myIndusList | keyvalue ">
+              <th>{{link.value.published-time}}</th>
+              <th><a href="{{link.value.url}}" target="_blank">{{link.value.url}}</a></th>
+            </tr>
+          </table>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </th>
+
+    <!-- Most covered industries expansion -->
+    <th>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let a of my_indus">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{a.concept}} Industries
+            </mat-panel-title>
+            <mat-panel-description>
+              News' sources provided here
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <table>
+            <tr>
+              <th>Published-Time</th>
+              <th>Link</th>
+            </tr>
+            <tr *ngFor="let link of myIndusList | keyvalue ">
+              <th>{{link.value.published-time}}</th>
+              <th><a href="{{link.value.url}}" target="_blank">{{link.value.url}}</a></th>
+            </tr>
+          </table>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </th>
+  </tr>
+</table>
+
